@@ -1,3 +1,5 @@
+# https://www.tutorialspoint.com/python_data_structure/python_graph_algorithms.htm
+
 class graph:
    def __init__(self,gdict=None):
       if gdict is None:
@@ -14,10 +16,12 @@ def dfs(graph, start, visited = None):
    return visited
 
 gdict = { 
-   "a" : set(["b","c"]),
-   "b" : set(["a", "d"]),
-   "c" : set(["a", "d"]),
-   "d" : set(["e"]),
-   "e" : set(["a"])
+   "s" : set(["b","c","d"]),
+   "b" : set(["s","e"]),
+   "c" : set(["g", "s"]),
+   "d" : set(["s"]),
+   "e" : set(["b","f","g"]),
+   "f" : set(["g","e"]),
+   "g" : set(["c","e","f"])
 }
-dfs(gdict, 'a')
+dfs(gdict, 's')
