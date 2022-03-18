@@ -10,29 +10,35 @@ class graph:
          gdict = {}
       self.gdict = gdict
 
-pq = [[]]
-
+pq = []
+path = []
 
 def ufc(graph, start, cost, goal, explored = None ):
    if explored is None:
       explored = set()
    explored.add(start)
    print("exploring " + start)
+   global path
    if(goal == start):
       return True #stop upper recursive calls
    
    global pq
    
    for ll in graph[start]:
-      pq.append([ll[0], (ll[1] + cost)])
-   pq = sorted(pq, key=lambda x:x[1]) # sort by cumulative cost
-   
+      tmp = [ll[0], (ll[1] + cost)]
+      pq.append(tmp)
+   #pq = sorted(pq, key=lambda x : x[1]) # sort by cumulative cost
+   pq.sort(key=lambda x:x[1])
+
    pq = prune_visited(pq, explored) #cyclic pruning
    
+   printll(pq)
+
    if (len(pq) == 0):
       print("No more to explore")
       return False
-   if(ufc(graph, pq[0], pq[1], goal, explored)):
+   ll = pq[0] #get least cost
+   if(ufc(graph, ll[0], ll[1], goal, explored)):
       return True
    return False
 
@@ -70,3 +76,5 @@ hdict = {
    "g" : 0
 }
 ufc(gdict, "s", 0, "g")
+for node in path:
+   print(node,end="")
