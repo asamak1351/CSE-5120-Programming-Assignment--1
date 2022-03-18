@@ -63,7 +63,7 @@ gdict = {
 }
 
 # heuristic table
-wdict = {
+hdict = {
    "s" : 9,
    "b" : 7,
    "c" : 10,
