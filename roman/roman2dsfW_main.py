@@ -1,7 +1,6 @@
 # https://www.tutorialspoint.com/python_data_structure/python_graph_algorithms.htm
 
 from operator import add, itemgetter
-from pickle import TRUE
 
 
 class graph:
@@ -10,12 +9,12 @@ class graph:
          gdict = {}
       self.gdict = gdict
 # Check for the visisted and unvisited nodes
-def dfs(graph, start, target, visited = None, ):
+def dfs(graph, start, goal, visited = None, ):
    if visited is None:
       visited = set()
    visited.add(start)
    print("exploring " + start)
-   if(target == start):
+   if(goal == start):
       return False
 
    ll = graph[start]
@@ -30,17 +29,16 @@ def dfs(graph, start, target, visited = None, ):
    #    print(letter1,end="")
    # print()
    # #-----
-   # print("\nafter")
+   # print("\nafter pruning")
    # printll(ll)
 
    for list1 in ll:
-      if(dfs(graph, list1[0], target, visited ) == False):
+      if(dfs(graph, list1[0], goal, visited ) == False):
          return False
    return True
 
 def prune_visited(listoflist, visited):
    rtn_ll = []
-   
    for list1 in listoflist:
       if (list1[0] not in visited):
          rtn_ll.append(list1)
