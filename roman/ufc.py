@@ -99,6 +99,7 @@ def printll(ll):
       print("[" + str(list1[0]) + "," + str(list1[1]) + "],", end="")
    print("")
 
+
 #graph
 gdict = { 
    "s" : [["b",2],["c",1],["d",10]],
@@ -109,7 +110,6 @@ gdict = {
    "f" : [["e",1],["g",3]],
    "g" : [["c",15],["e",2],["f",3]]
 }
-
 # heuristic table
 hdict = {
    "s" : 9,
@@ -120,6 +120,7 @@ hdict = {
    "f" : 1,
    "g" : 0
 }
+
 
 print("Uniform Cost")
 ufc(gdict, "s", 0, "g")
