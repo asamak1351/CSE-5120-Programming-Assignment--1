@@ -1,4 +1,4 @@
-# https://www.tutorialspoint.com/python_data_structure/python_graph_algorithms.htm
+# modified https://www.tutorialspoint.com/python_data_structure/python_graph_algorithms.htm
 
 from operator import add, itemgetter
 
@@ -8,8 +8,8 @@ class graph:
       if gdict is None:
          gdict = {}
       self.gdict = gdict
-# Check for the visisted and unvisited nodes
-def dfs(graph, start, goal, visited = None, ):
+
+def dfs(graph, start, goal, visited = None ):
    if visited is None:
       visited = set()
    visited.add(start)
