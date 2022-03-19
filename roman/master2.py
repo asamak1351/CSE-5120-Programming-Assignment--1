@@ -122,67 +122,56 @@ def ufc(graph,hdict,start, goal, cost = 0, explored = None, pq = None, pqh = Non
    return False
 
 def dfsw(graph,start, goal, cost = None, explored = None):
-    if explored is None:
+   if explored is None:
       explored = set()
       cost = 0
       print("\tPath: ",end="")
-    explored.add(start)
-    print(start,end=" ")
-    if(goal == start):
-        print("\n\tCost: " + str(cost))
-        return False
+   explored.add(start)
+   print(start,end=" ")
 
-    frontier = graph[start]
-    # sort by weight
-    frontier.sort(key=lambda x:x[1])
-    # Debug
-    # printll(ll)
-    frontier = prune_explored(frontier, explored)
-    
-    # Debug
-    # print("explored: ", end="")
-    # for letter1 in explored:
-    #    print(letter1,end="")
-    # print()
-    # #-----
-    # print("\nafter pruning")
-    # printll(frontier)
+   #check if goal has been explored
+   if(goal == start):
+      print("\n\tCost: " + str(cost))
+      return False
+   
+   # get adjacent nodes and sort by weight
+   frontier = graph[start]
+   frontier.sort(key=lambda x:x[1])
+   
+   #prune explored form frontier
+   frontier = prune_explored(frontier, explored)
 
-    for list1 in frontier:
-        if(dfsw(graph, list1[0], goal, cost + list1[1], explored ) == False):
-            return False
-    return True
+   # continue algorithm
+   for list1 in frontier:
+      if(dfsw(graph, list1[0], goal, cost + list1[1], explored ) == False):
+         return False
+   return True
 
 def dfs(graph,start, goal, cost = None, explored = None):
-    if explored is None:
+   if explored is None:
       explored = set()
       cost = 0
       print("\tPath: ",end="")
-    explored.add(start)
-    print(start,end=" ")
-    if(goal == start):
-        print("\n\tCost: " + str(cost))
-        return False
+   explored.add(start)
+   print(start,end=" ")
 
-    frontier = graph[start]
-    # sort by weight
-    frontier.sort(key=lambda x:x[0])
-    # Debug
-    # printll(ll)
-    frontier = prune_explored(frontier, explored)
-    # Debug
-    # print("explored: ", end="")
-    # for letter1 in explored:
-    #    print(letter1,end="")
-    # print()
-    # #-----
-    # print("\nafter pruning")
-    # printll(frontier)
+   #check if goal has been explored
+   if(goal == start):
+      print("\n\tCost: " + str(cost))
+      return False
 
-    for list1 in frontier:
-        if(dfs(graph, list1[0], goal, cost + list1[1], explored ) == False):
-            return False
-    return True
+   # get adjacent nodes and sort by weight
+   frontier = graph[start]
+   frontier.sort(key=lambda x:x[0])
+   
+   #prune explored from frontier
+   frontier = prune_explored(frontier, explored)
+
+   #continue algorithm
+   for list1 in frontier:
+      if(dfs(graph, list1[0], goal, cost + list1[1], explored ) == False):
+         return False
+   return True
 
 def bfs(graph,start,goal, frontier = None, cost = None, explored = None, qh = None):
    if explored is None:
@@ -195,34 +184,23 @@ def bfs(graph,start,goal, frontier = None, cost = None, explored = None, qh = No
       
    explored.add(start)
    
+   #check if goal has been explored
    if(goal == start):
       print("\tCost: " + str(cost))
       backtrace_optimal([start,cost], qh)
       return False
 
-   #insert queue by alphabetic
+   #get adjacent nodes
    ll = graph[start]
-   #printll(ll)
+   # prune then push on to queue in alphabetic oder
    ll = prune_explored(ll, explored)
    ll.sort(key=lambda x:x[0])
    for list1 in ll:
       frontier.append([list1[0],cost + list1[1]])
    frontier = prune_explored(frontier, explored)
 
+   #keep track of history
    qh.append(frontier)
-
-   # global debug
-   # if(debug):# caution may not work
-   #    #Debug
-   #    printll(ll)
-   #    #Debug
-   #    print("explored: ", end="")
-   #    for letter1 in explored:
-   #       print(letter1,end="")
-   #    print()
-   #    #-----
-   #    print("\nafter pruning")
-   #    printll(frontier)
 
    #pop queue
    list1 = frontier[0]
@@ -264,7 +242,6 @@ def backtrace_optimal(final, pqh):
    return path   
 
 
-
 def prune_worse_paths(pq, index = 0): #prune the worse paths from the frontier
    if(index >= len(pq) - 1):
       return
@@ -276,7 +253,7 @@ def prune_worse_paths(pq, index = 0): #prune the worse paths from the frontier
    prune_worse_paths(pq, index + 1)
 
 
-def printll(ll):
+def printll(ll): #print list of list
    for list1 in ll:
       print("[" + str(list1[0]) + "," + str(list1[1]) + "],", end="")
    print("")
