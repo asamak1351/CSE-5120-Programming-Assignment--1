@@ -1,8 +1,8 @@
 # modified https://www.tutorialspoint.com/python_data_structure/python_graph_algorithms.htm
 
 from operator import add
-from subprocess import list2cmdline
 from typing import List
+import time
 
 debug = False
 
@@ -211,18 +211,18 @@ def bfs(graph,start,goal, frontier = None, cost = None, explored = None, qh = No
 
    qh.append(frontier)
 
-   global debug
-   if(debug):
-      #Debug
-      printll(ll)
-      #Debug
-      print("explored: ", end="")
-      for letter1 in explored:
-         print(letter1,end="")
-      print()
-      #-----
-      print("\nafter pruning")
-      printll(frontier)
+   # global debug
+   # if(debug):# caution may not work
+   #    #Debug
+   #    printll(ll)
+   #    #Debug
+   #    print("explored: ", end="")
+   #    for letter1 in explored:
+   #       print(letter1,end="")
+   #    print()
+   #    #-----
+   #    print("\nafter pruning")
+   #    printll(frontier)
 
    #pop queue
    list1 = frontier[0]
@@ -318,26 +318,56 @@ hdict2 = {
 }
 
 print("Graph1: BFS")
+start = time.time()
 bfs(gdict1, "s", "g")
+end = time.time()
+print("\nTime: " + str(end - start))
 print("\nGraph2: BFS")
+start = time.time()
 bfs(gdict2, "a", "g")
+end = time.time()
+print("\nTime: " + str(end - start))
 
 print("\n\nGraph1: DFS")
+start = time.time()
 dfs(gdict1, "s", "g")
+end = time.time()
+print("\nTime: " + str(end - start))
 print("Graph2: DFS")
+start = time.time()
 dfs(gdict2, "a", "g")
+end = time.time()
+print("\nTime: " + str(end - start))
 
 print("\nGraph1: DFS by weight")
+start = time.time()
 dfsw(gdict1, "s", "g")
+end = time.time()
+print("\nTime: " + str(end - start))
 print("Graph2: DFS by weight")
+start = time.time()
 dfsw(gdict2, "a", "g")
+end = time.time()
+print("\nTime: " + str(end - start))
 
 print("\nGraph1: Uniform Cost")
+start = time.time()
 ufc(gdict1,hdict1, "s", "g")
+end = time.time()
+print("\nTime: " + str(end - start))
 print("\nGraph2: Uniform Cost")
+start = time.time()
 ufc(gdict2,hdict2, "a", "g")
+end = time.time()
+print("\nTime: " + str(end - start))
 
 print("\n\nGraph1: a*")
+start = time.time()
 a_star(gdict1,hdict1, "s", "g")
+end = time.time()
+print("\nTime: " + str(end - start))
 print("\nGraph2: a*")
+start = time.time()
 a_star(gdict2,hdict2, "a", "g")
+end = time.time()
+print("\nTime: " + str(end - start))
