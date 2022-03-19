@@ -38,7 +38,7 @@ def ufc(graph,hdict,start, goal, cost = 0, explored = None, pq = None, pqh = Non
    pq.sort(key=lambda x:x[1])
    
    #cyclic pruning
-   #pq = prune_visited(pq, explored) 
+   pq = prune_explored(pq, explored) 
 
    #prune worse paths
    prune_worse_paths(pq)
@@ -64,7 +64,7 @@ def ufc(graph,hdict,start, goal, cost = 0, explored = None, pq = None, pqh = Non
    return False
 
 
-def prune_visited(listoflist, visited):
+def prune_explored(listoflist, visited):
    rtn_ll = []
    for list1 in listoflist:
       if (list1[0] not in visited):
@@ -150,7 +150,7 @@ hdict2 = {
 }
 
 
-print("Uniform Cost")
+print("\nUniform Cost")
 ufc(gdict1,hdict1, "s", "g")
-
+print("\nUniform Cost")
 ufc(gdict2,hdict2, "a", "g")
