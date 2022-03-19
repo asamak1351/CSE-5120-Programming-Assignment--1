@@ -41,7 +41,7 @@ def ufc(graph,hdict,start, goal, cost = 0, explored = None, pq = None, pqh = Non
    pq = prune_explored(pq, explored) 
 
    #prune worse paths
-   prune_worse_paths(pq)
+   #prune_worse_paths(pq)
    
    # debug show priority queue
    printll(pq)

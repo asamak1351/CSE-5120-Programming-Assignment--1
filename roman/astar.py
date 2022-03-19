@@ -37,8 +37,8 @@ def a_star(graph,hdict,start, goal, cost = 0, explored = None, pq = None, pqh = 
    # sort by cumulative cost; manually maintain priortiy queue 
    pq.sort(key=lambda x:x[1])
    
-   #cyclic pruning
-   pq = prune_explored(pq, explored) 
+   #cyclic pruning ##a_star uses prune worse paths instead of cyclic pruning
+   #pq = prune_explored(pq, explored) 
 
    #prune worse paths
    prune_worse_paths(pq)
