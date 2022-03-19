@@ -12,7 +12,7 @@ class graph:
 
 
 
-def a_star(graph,hdict,start, goal, cost = 0, explored = None, pq = None, pqh = None ):
+def ufc(graph,hdict,start, goal, cost = 0, explored = None, pq = None, pqh = None ):
    
    if explored is None:
       explored = set()
@@ -32,7 +32,7 @@ def a_star(graph,hdict,start, goal, cost = 0, explored = None, pq = None, pqh = 
    
    #add to adjacent node to priority queue  #add heuristic to cost
    for list1 in graph[start]:
-      pq.append([list1[0], (list1[1] + cost + hdict[list1[0]]) ])
+      pq.append([list1[0], (list1[1] + cost) ])
    
    # sort by cumulative cost; manually maintain priortiy queue 
    pq.sort(key=lambda x:x[1])
@@ -59,7 +59,7 @@ def a_star(graph,hdict,start, goal, cost = 0, explored = None, pq = None, pqh = 
    pq = pq[1:]
  
    #continue algorithm #subtract heuristic to get actual cost
-   if(a_star(graph, hdict, list1[0], goal, list1[1] - hdict[list1[0]], explored, pq, pqh)):
+   if(ufc(graph, hdict, list1[0], goal, list1[1], explored, pq, pqh)):
       return True
    return False
 
@@ -150,7 +150,7 @@ hdict2 = {
 }
 
 
-print("a*")
-a_star(gdict1,hdict1, "s", "g")
-print("a*")
-a_star(gdict2,hdict2, "a", "g")
+print("Uniform Cost")
+ufc(gdict1,hdict1, "s", "g")
+
+ufc(gdict2,hdict2, "a", "g")
