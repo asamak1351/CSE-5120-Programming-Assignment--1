@@ -1,8 +1,10 @@
 # modified https://www.tutorialspoint.com/python_data_structure/python_graph_algorithms.htm
 
 from operator import add
+from subprocess import list2cmdline
 from typing import List
 
+debug = False
 
 class graph:
    def __init__(self,gdict=None):
@@ -20,8 +22,10 @@ def a_star(graph,hdict,start, goal, cost = 0, explored = None, pq = None, pqh = 
       pqh.append([[start,cost]]) #need for backtracing
    explored.add(start)
    
-   #Print exploring in real-time
-   print("exploring " + start +":"+str(cost))
+   global debug
+   if(debug):
+      #Print exploring in real-time
+      print("exploring " + start +":"+str(cost))
    
    #check if goal has been explored
    if( start == goal):
@@ -42,8 +46,9 @@ def a_star(graph,hdict,start, goal, cost = 0, explored = None, pq = None, pqh = 
    #prune worse paths
    prune_worse_paths(pq)
    
-   # debug show priority queue
-   printll(pq)
+   if(debug):
+      # debug show priority queue
+      printll(pq)
 
    #keep track of history
    pqh.append(pq)
@@ -71,8 +76,10 @@ def ufc(graph,hdict,start, goal, cost = 0, explored = None, pq = None, pqh = Non
       pqh.append([[start,cost]]) #need for backtracing
    explored.add(start)
    
-   #Print exploring in real-time
-   print("exploring " + start +":"+str(cost))
+   global debug
+   if(debug):
+      #Print exploring in real-time
+      print("exploring " + start +":"+str(cost))
    
    #check if goal has been explored
    if( start == goal):
@@ -93,8 +100,9 @@ def ufc(graph,hdict,start, goal, cost = 0, explored = None, pq = None, pqh = Non
    #prune worse paths
    #prune_worse_paths(pq)
    
-   # debug show priority queue
-   printll(pq)
+   if(debug):
+      # debug show priority queue
+      printll(pq)
 
    #keep track of history
    pqh.append(pq)
@@ -117,11 +125,11 @@ def dfsw(graph,start, goal, cost = None, explored = None):
     if explored is None:
       explored = set()
       cost = 0
-      print("Path: ",end="")
+      print("\tPath: ",end="")
     explored.add(start)
     print(start,end=" ")
     if(goal == start):
-        print("\nCost: " + str(cost))
+        print("\n\tCost: " + str(cost))
         return False
 
     frontier = graph[start]
@@ -149,11 +157,11 @@ def dfs(graph,start, goal, cost = None, explored = None):
     if explored is None:
       explored = set()
       cost = 0
-      print("Path: ",end="")
+      print("\tPath: ",end="")
     explored.add(start)
     print(start,end=" ")
     if(goal == start):
-        print("\nCost: " + str(cost))
+        print("\n\tCost: " + str(cost))
         return False
 
     frontier = graph[start]
@@ -162,7 +170,6 @@ def dfs(graph,start, goal, cost = None, explored = None):
     # Debug
     # printll(ll)
     frontier = prune_explored(frontier, explored)
-    
     # Debug
     # print("explored: ", end="")
     # for letter1 in explored:
@@ -177,6 +184,52 @@ def dfs(graph,start, goal, cost = None, explored = None):
             return False
     return True
 
+def bfs(graph,start,goal, frontier = None, cost = None, explored = None, qh = None):
+   if explored is None:
+      explored = set()
+      frontier = list()
+      cost = 0
+      path = list()
+      qh = list()
+      qh.append([start,cost])
+      
+   explored.add(start)
+   
+   if(goal == start):
+      print("\tCost: " + str(cost))
+      backtrace_optimal([start,cost], qh)
+      return False
+
+   #insert queue by alphabetic
+   ll = graph[start]
+   #printll(ll)
+   ll = prune_explored(ll, explored)
+   ll.sort(key=lambda x:x[0])
+   for list1 in ll:
+      frontier.append([list1[0],cost + list1[1]])
+   frontier = prune_explored(frontier, explored)
+
+   qh.append(frontier)
+
+   global debug
+   if(debug):
+      #Debug
+      printll(ll)
+      #Debug
+      print("explored: ", end="")
+      for letter1 in explored:
+         print(letter1,end="")
+      print()
+      #-----
+      print("\nafter pruning")
+      printll(frontier)
+
+   #pop queue
+   list1 = frontier[0]
+   frontier = frontier[1:]
+   if(bfs(graph, list1[0], goal,frontier, list1[1], explored, qh) == False):
+      return False
+   return True
 
 
 def prune_explored(listoflist, explored):
@@ -264,22 +317,27 @@ hdict2 = {
    "g" : 0
 }
 
-print("\n\nDFS")
+print("Graph1: BFS")
+bfs(gdict1, "s", "g")
+print("\nGraph2: BFS")
+bfs(gdict2, "a", "g")
+
+print("\n\nGraph1: DFS")
 dfs(gdict1, "s", "g")
-print("\nDFS")
+print("Graph2: DFS")
 dfs(gdict2, "a", "g")
 
-print("\n\nDFS by weight")
+print("\nGraph1: DFS by weight")
 dfsw(gdict1, "s", "g")
-print("\nDFS by weight")
+print("Graph2: DFS by weight")
 dfsw(gdict2, "a", "g")
 
-print("\n\nUniform Cost")
+print("\nGraph1: Uniform Cost")
 ufc(gdict1,hdict1, "s", "g")
-print("\nUniform Cost")
+print("\nGraph2: Uniform Cost")
 ufc(gdict2,hdict2, "a", "g")
 
-print("\n\na*")
+print("\n\nGraph1: a*")
 a_star(gdict1,hdict1, "s", "g")
-print("\na*")
+print("\nGraph2: a*")
 a_star(gdict2,hdict2, "a", "g")
