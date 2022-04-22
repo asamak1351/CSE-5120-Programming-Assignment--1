@@ -43,8 +43,8 @@ def a_star(graph,hdict,start, goal, cost = 0, explored = None, pq = None, pqh = 
    #cyclic pruning ##a_star uses prune worse paths instead of cyclic pruning
    #pq = prune_explored(pq, explored) 
 
-   #prune worse paths
-   prune_worse_paths(pq)
+   #prune worse paths not needed
+   #prune_worse_paths(pq)
    
    if(debug):
       # debug show priority queue
